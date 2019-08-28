@@ -1,17 +1,18 @@
 # Either
 A container type for representing values of _either_ type `A` or type `B`. 
 
+### Download 
 
-### build.gradle
+**build.gradle:**
 
 ```groovy
-asdf
+implementation "io.github.sphrak.either:either:1.0.0"
 ```
 
-### build.gradle.kts
+**build.gradle.kts:**
 
 ```kotlin
-asdf
+implementation("io.github.sphrak.either:either:1.0.0")
 ```
 
 ### Example Usage
@@ -19,7 +20,6 @@ asdf
 ```kotlin
 fun callNetwork(): Either<NetworkFailure, Response> 
 ```
-
 
 ### License
 

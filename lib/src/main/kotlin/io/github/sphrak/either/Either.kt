@@ -21,8 +21,8 @@ sealed class Either<out L0, out R0> {
     data class Left<out L1>(val a: L1) : Either<L1, Nothing>()
     data class Right<out R1>(val b: R1) : Either<Nothing, R1>()
 
-    val isRight get() = this is Right<R0>
-    val isLeft get() = this is Left<L0>
+    val isRight: Boolean get() = this is Right<R0>
+    val isLeft: Boolean get() = this is Left<L0>
 
     fun <L2> left(a: L2): Left<L2> = Left(a)
     fun <R2> right(b: R2): Right<R2> = Right(b)
