@@ -1,3 +1,6 @@
+import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
+import com.jfrog.bintray.gradle.BintrayExtension
+
 /*
  * Copyright (c) 2019 Niclas Kron.
  *
@@ -18,14 +21,25 @@ val kotlin_version: String by project
 
 plugins {
     kotlin("jvm")
+    id("com.github.johnrengelman.shadow")
+    `maven-publish`
+    id("com.jfrog.bintray")
     application
 }
 
-group = "io.github.sphrak.either"
-version = "0.1.0"
+val artifactID = "either"
+val mainClassName = "io.github.sphrak.Either"
+val build: DefaultTask by tasks
+val shadowJar = tasks["shadowJar"] as ShadowJar
 
-//kotlin.sourceSets["main"].kotlin.srcDirs("src/main")
-//kotlin.sourceSets["test"].kotlin.srcDirs("src/test")
+build.dependsOn(shadowJar)
+
+application {
+    mainClassName = "io.github.sphrak.EitherKt"
+    applicationName = "either"
+    version = "1.0-SNAPSHOT"
+    group = "io.github.sphrak"
+}
 
 configurations {
     ktlint
@@ -49,6 +63,34 @@ dependencies {
     ktlint("com.pinterest:ktlint:0.34.2")
     testImplementation("org.junit.jupiter:junit-jupiter:5.5.1")
     testImplementation("org.assertj:assertj-core:3.13.2")
+}
+
+publishing {
+    publications {
+        create<MavenPublication>("mavenJava") {
+            from(components["java"])
+            artifact(tasks["shadowJar"])
+            groupId = project.group as String
+            artifactId = "either"
+            version = project.version as String
+        }
+    }
+}
+
+fun findProperty(s: String) = project.findProperty(s) as String?
+
+bintray {
+    user = System.getenv("BINTRAY_USER") ?: ""
+    key = System.getenv("BINTRAY_API_KEY") ?: ""
+    publish = true
+    setPublications("mavenJava")
+    pkg(delegateClosureOf<BintrayExtension.PackageConfig> {
+        repo = "either"
+        name = "either"
+        version(delegateClosureOf<BintrayExtension.VersionConfig> {
+            name = project.version as String
+        })
+    })
 }
 
 tasks {

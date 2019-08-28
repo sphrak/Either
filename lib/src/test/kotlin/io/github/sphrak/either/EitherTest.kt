@@ -23,7 +23,7 @@ class EitherTest {
 
     @Test
     fun `Either Right should return correct type`() {
-        val result = Either.Right("asdf")
+        val result: Either.Right<String> = Either.Right("asdf")
 
         assertThat(result).isInstanceOf(Either::class.java)
         assertThat(result.isRight).isEqualTo(true)
@@ -41,7 +41,7 @@ class EitherTest {
 
     @Test
     fun `Either right should return correct type`() {
-        val result = Either.Right("asdf")
+        val result: Either.Right<String> = Either.Right("asdf")
 
         assertThat(result).isInstanceOf(Either::class.java)
         assertThat(result.isRight).isEqualTo(true)
