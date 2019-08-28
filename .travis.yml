@@ -6,13 +6,14 @@ cache:
   - "$HOME/.gradle/wrapper/"
 before_install:
 - chmod +x gradlew
-
-script: 
+script:
 - "./gradlew clean build"
 - "./gradlew test"
-- "./gradlew bintrayUpload -PbintrayUser=$BINTRAY_USER -PbintrayApiKey=$BINTRAY_API_KEY"
 deploy:
-  provider: releases
+  provider: bintray
+  file: "**/*Either.jar"
+  script: "./gradlew bintrayUpload -PbintrayUser=$BINTRAY_USER -PbintrayApiKey=$BINTRAY_API_KEY"
+  skip_cleanup: true
   on:
     tags: true
-    repo: sphrak/either
+    repo: sphrak/Either

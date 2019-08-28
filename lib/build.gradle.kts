@@ -27,8 +27,8 @@ plugins {
     application
 }
 
-val artifactID = "either"
-val mainClassName = "io.github.sphrak.Either"
+val artifactId = "either"
+val mainClassName = "io.github.sphrak.EitherKt"
 val build: DefaultTask by tasks
 val shadowJar = tasks["shadowJar"] as ShadowJar
 
@@ -36,9 +36,9 @@ build.dependsOn(shadowJar)
 
 application {
     mainClassName = "io.github.sphrak.EitherKt"
-    applicationName = "either"
-    version = "1.0-SNAPSHOT"
-    group = "io.github.sphrak"
+    applicationName = artifactId
+    version = project.version as String
+    group = project.group as String
 }
 
 configurations {
@@ -71,7 +71,7 @@ publishing {
             from(components["java"])
             artifact(tasks["shadowJar"])
             groupId = project.group as String
-            artifactId = "either"
+            artifactId = artifactId
             version = project.version as String
         }
     }
@@ -80,13 +80,13 @@ publishing {
 fun findProperty(s: String) = project.findProperty(s) as String?
 
 bintray {
-    user = System.getenv("BINTRAY_USER") ?: ""
-    key = System.getenv("BINTRAY_API_KEY") ?: ""
+    user = System.getenv("BINTRAY_USER")
+    key = System.getenv("BINTRAY_API_KEY")
     publish = true
     setPublications("mavenJava")
     pkg(delegateClosureOf<BintrayExtension.PackageConfig> {
         repo = "either"
-        name = "either"
+        name = artifactId
         version(delegateClosureOf<BintrayExtension.VersionConfig> {
             name = project.version as String
         })

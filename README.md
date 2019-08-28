@@ -1,3 +1,5 @@
+[![travis-ci](https://travis-ci.org/sphrak/Either.svg?branch=master)](https://travis-ci.org/sphrak/Either)
+
 # Either
 A container type for representing values of _either_ type `A` or type `B`. 
 
