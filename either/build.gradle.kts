@@ -68,7 +68,9 @@ publishing {
     publications {
         create<MavenPublication>("mavenJava") {
             from(components["java"])
-            artifact(tasks["shadowJar"])
+            artifact(tasks["shadowJar"]) {
+                classifier = "sources"
+            }
             groupId = project.group as String
             artifactId = artifactId
             version = project.version as String
@@ -87,6 +89,7 @@ bintray {
         delegateClosureOf<BintrayExtension.PackageConfig> {
             repo = "either"
             name = artifactId
+            vcsUrl = "https://github.com/sphrak/either.git"
             version(
                 delegateClosureOf<BintrayExtension.VersionConfig> {
                     name = project.version as String
