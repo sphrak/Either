@@ -17,12 +17,6 @@ implementation "io.github.sphrak:either:1.0.0"
 implementation("io.github.sphrak:either:1.0.0")
 ```
 
-### Example Usage
-
-```kotlin
-fun callNetwork(): Either<NetworkFailure, Response> 
-```
-
 ### License
 
 	Copyright 2018 Niclas Kron
