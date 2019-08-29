@@ -4,16 +4,17 @@
 
 
 # Either
-A container type for representing values of _either_ type `A` or type `B`. 
+A container type for representing values. The `Either` type represents values with two possibilities. A value of type `Either` is either `Either.Left(a)` or `Either.Right(b)`.
+
+The `Either` type is sometimes used to represent a value which is either correct or an error; by convention, the `Either.Left` constructor is used to hold an error value and the `Either.Right` constructor is used to hold a correct value (mnemonic: "right" also means "correct").
 
 ### Download 
 
-```
+```groovy
 repositories {
     jcenter()
 }
 ```
-
 
 **build.gradle:**
 
