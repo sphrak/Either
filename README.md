@@ -1,4 +1,7 @@
 [![travis-ci](https://travis-ci.org/sphrak/Either.svg?branch=master)](https://travis-ci.org/sphrak/Either)
+[![Bintray](https://img.shields.io/bintray/v/sphrak/either/either)](https://bintray.com/sphrak/either/either)
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://github.com/sphrak/Either/blob/master/LICENSE)
+
 
 # Either
 A container type for representing values of _either_ type `A` or type `B`. 
