@@ -10,9 +10,8 @@ script:
 - "./gradlew clean build"
 - "./gradlew test"
 deploy:
-  provider: bintray
-  file: "**/*Either.jar"
-  script: "./gradlew bintrayUpload -PbintrayUser=$BINTRAY_USER -PbintrayApiKey=$BINTRAY_API_KEY"
+  provider: script
+  script: ./gradlew bintrayUpload
   skip_cleanup: true
   on:
     tags: true

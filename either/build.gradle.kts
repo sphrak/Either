@@ -33,7 +33,6 @@ val build: DefaultTask by tasks
 val shadowJar = tasks["shadowJar"] as ShadowJar
 
 build.dependsOn(shadowJar)
-
 application {
     mainClassName = "io.github.sphrak.EitherKt"
     applicationName = artifactId
@@ -84,13 +83,17 @@ bintray {
     key = System.getenv("BINTRAY_API_KEY")
     publish = true
     setPublications("mavenJava")
-    pkg(delegateClosureOf<BintrayExtension.PackageConfig> {
-        repo = "either"
-        name = artifactId
-        version(delegateClosureOf<BintrayExtension.VersionConfig> {
-            name = project.version as String
-        })
-    })
+    pkg(
+        delegateClosureOf<BintrayExtension.PackageConfig> {
+            repo = "either"
+            name = artifactId
+            version(
+                delegateClosureOf<BintrayExtension.VersionConfig> {
+                    name = project.version as String
+                }
+            )
+        }
+    )
 }
 
 tasks {

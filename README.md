@@ -1,7 +1,5 @@
 [![travis-ci](https://travis-ci.org/sphrak/Either.svg?branch=master)](https://travis-ci.org/sphrak/Either)
 
-**Not published**
-
 # Either
 A container type for representing values of _either_ type `A` or type `B`. 
 
@@ -10,13 +8,13 @@ A container type for representing values of _either_ type `A` or type `B`.
 **build.gradle:**
 
 ```groovy
-implementation "io.github.sphrak.either:either:1.0.0"
+implementation "io.github.sphrak:either:1.0.0"
 ```
 
 **build.gradle.kts:**
 
 ```kotlin
-implementation("io.github.sphrak.either:either:1.0.0")
+implementation("io.github.sphrak:either:1.0.0")
 ```
 
 ### Example Usage

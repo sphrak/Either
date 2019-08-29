@@ -17,10 +17,9 @@ allprojects {
     repositories {
         jcenter()
         mavenCentral()
-        maven {
-            setUrl("https://dl.bintray.com/sphrak/either/")
-        }
     }
+    version = "1.0.0"
+    group = "io.github.sphrak"
 }
 
 tasks.register("clean", Delete::class) {
