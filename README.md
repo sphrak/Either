@@ -5,16 +5,23 @@ A container type for representing values of _either_ type `A` or type `B`.
 
 ### Download 
 
+```
+repositories {
+    jcenter()
+}
+```
+
+
 **build.gradle:**
 
 ```groovy
-implementation "io.github.sphrak:either:1.0.0"
+implementation "io.github.sphrak:either:1.0.1"
 ```
 
 **build.gradle.kts:**
 
 ```kotlin
-implementation("io.github.sphrak:either:1.0.0")
+implementation("io.github.sphrak:either:1.0.1")
 ```
 
 ### License
