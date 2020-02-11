@@ -7,6 +7,10 @@
 ### Fixed
 * Correctly publish sources
 
+### Changed
+* Kotlin sdk bump 1.3.50 -> 1.3.61
+* Ktlint bump 0.36.0
+
 ## [1.0.1] -- 2019-08-29
 
 ### Changed
