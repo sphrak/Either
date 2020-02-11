@@ -21,24 +21,16 @@ val kotlin_version: String by project
 
 plugins {
     kotlin("jvm")
-    id("com.github.johnrengelman.shadow")
+    id("com.github.johnrengelman.shadow") version "5.2.0"
     `maven-publish`
     id("com.jfrog.bintray")
-    application
 }
 
 val artifactId = "either"
-val mainClassName = "io.github.sphrak.EitherKt"
 val build: DefaultTask by tasks
 val shadowJar = tasks["shadowJar"] as ShadowJar
 
 build.dependsOn(shadowJar)
-application {
-    mainClassName = "io.github.sphrak.EitherKt"
-    applicationName = artifactId
-    version = project.version as String
-    group = project.group as String
-}
 
 configurations {
     ktlint
@@ -70,10 +62,13 @@ project.afterEvaluate {
         archiveClassifier.set("sources")
         from(project.sourceSets["main"].java.srcDirs)
     }
+
     publishing {
         publications {
             create<MavenPublication>("mavenJava") {
                 from(components["java"])
+
+                artifact(shadowJar)
                 artifact(sourcesJar.get())
                 groupId = project.group as String
                 artifactId = artifactId
