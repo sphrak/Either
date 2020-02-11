@@ -64,19 +64,25 @@ dependencies {
     testImplementation("org.assertj:assertj-core:3.13.2")
 }
 
-publishing {
-    publications {
-        create<MavenPublication>("mavenJava") {
-            from(components["java"])
-            artifact(tasks["shadowJar"]) {
-                classifier = "sources"
+project.afterEvaluate {
+
+    val sourcesJar = tasks.register<Jar>("sourcesJar") {
+        archiveClassifier.set("sources")
+        from(project.sourceSets["main"].java.srcDirs)
+    }
+    publishing {
+        publications {
+            create<MavenPublication>("mavenJava") {
+                from(components["java"])
+                artifact(sourcesJar.get())
+                groupId = project.group as String
+                artifactId = artifactId
+                version = project.version as String
             }
-            groupId = project.group as String
-            artifactId = artifactId
-            version = project.version as String
         }
     }
 }
+
 
 fun findProperty(s: String) = project.findProperty(s) as String?
 
