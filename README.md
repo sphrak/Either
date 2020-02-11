@@ -19,13 +19,13 @@ repositories {
 **build.gradle:**
 
 ```groovy
-implementation "io.github.sphrak:either:1.0.1"
+implementation "io.github.sphrak:either:1.0.2"
 ```
 
 **build.gradle.kts:**
 
 ```kotlin
-implementation("io.github.sphrak:either:1.0.1")
+implementation("io.github.sphrak:either:1.0.2")
 ```
 
 ### License
