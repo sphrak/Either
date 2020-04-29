@@ -2,10 +2,13 @@
 
 ## [Unreleased]
 
-## [1.1.0] -- 2020-02-*
+## [1.1.0] -- 2020-04-29
 
 ### Added
-* Added `asRight()`, `asLeft()` extension functions for `<T>`
+* Added `<T>.asRight()`, `<T>.asLeft()` extension functions
+
+### Changed 
+* Kotlin sdk bump 1.3.61 -> 1.3.72
 
 ## [1.0.2] -- 2020-02-11
 

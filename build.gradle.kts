@@ -17,7 +17,8 @@ allprojects {
         jcenter()
         mavenCentral()
     }
-    version = "1.1.0xyz"
+
+    version = "1.1.0"
     group = "io.github.sphrak"
 }
 
