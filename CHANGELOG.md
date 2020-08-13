@@ -13,6 +13,9 @@ This release includes some extension functions to make code more readable.
 * Added `Either<L>.onFailure` -- extension function to handle `Left` case
 * Added basic usage samples
 
+### Removed
+* `<A, B, C>.c()` extension function has received `internal` visibility modifier
+
 ## [1.1.0] -- 2020-04-29
 
 ### Added
