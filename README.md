@@ -39,7 +39,7 @@ getNetworkScores()
 
 ```
 
-`onRight` and `onSuccess` is semantically the same
+`onRight` and `onSuccess` are semantically the same
 
 #### Either.Left
 Executed only when the received type is `Either.Left`.
@@ -51,7 +51,7 @@ getScores()
     }
 ```
 
-`onLeft` and `onFailure` is semantically the same
+`onLeft` and `onFailure` are semantically the same
 
 #### Both
 Handle both `Either.Left` and `Either.Right` depending on what result is received. This is useful for exhausting
