@@ -49,8 +49,8 @@ getScores()
 ```
 
 #### Both
-Handle both `Either.Left` and `Either.Right` depending on what result is received. This is useful when you want to exhaust
-the possible outcomes.
+Handle both `Either.Left` and `Either.Right` depending on what result is received. This is useful for exhausting
+both possible outcomes.
 
 ```kotlin
 getScores()
@@ -65,7 +65,7 @@ getScores()
 ```
 
 ### Download 
-Make sure that you have either `jcenter()` or `mavenCentral()` in the list of repositories.
+Make sure to have either `jcenter()` or `mavenCentral()` in the list of repositories.
 ```groovy
 repositories {
     jcenter()
