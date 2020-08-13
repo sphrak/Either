@@ -33,10 +33,13 @@ Executed only when the received type is `Either.Right`.
 ```kotlin
 getNetworkScores()
     .onSuccess { listOfScore: List<Int>
-        // will execute because result is of type Either.Right
+        // print scores in success case only
         listOfScore.forEach { println(it) }
     }
+
 ```
+
+`onRight` and `onSuccess` is semantically the same
 
 #### Either.Left
 Executed only when the received type is `Either.Left`.
@@ -44,9 +47,11 @@ Executed only when the received type is `Either.Left`.
 ```kotlin
 getScores()
     .onError {
-        // wont execute because result is not of type Either.Right
+        // handle error only
     }
 ```
+
+`onLeft` and `onFailure` is semantically the same
 
 #### Both
 Handle both `Either.Left` and `Either.Right` depending on what result is received. This is useful for exhausting
