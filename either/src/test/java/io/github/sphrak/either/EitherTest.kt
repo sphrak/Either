@@ -16,6 +16,9 @@
 
 package io.github.sphrak.either
 
+import io.github.sphrak.either.extension.onError
+import io.github.sphrak.either.extension.onResult
+import io.github.sphrak.either.extension.onSuccess
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -55,5 +58,43 @@ class EitherTest {
                 assertThat(right).isEqualTo("asdf")
             }
         )
+    }
+
+    @Test
+    fun `test onSuccess extension function`() {
+
+        val either: Either.Right<String> = Either.Right("aaaaaaaa")
+
+        either
+            .onSuccess {
+                assertThat(it).isEqualTo("aaaaaaaa")
+            }
+    }
+
+    @Test
+    fun `test onError extension function`() {
+
+        val either: Either.Left<String> = Either.Left("bbbbbbbb")
+
+        either
+            .onError {
+                assertThat(it).isEqualTo("bbbbbbbb")
+            }
+    }
+
+    @Test
+    fun `test onResult extension function`() {
+
+        val either: Either.Left<String> = Either.Left("failure")
+
+        either
+            .onResult(
+                onError = {
+                    assertThat(it).isEqualTo("failure")
+                },
+                onSuccess = {
+                }
+
+            )
     }
 }
