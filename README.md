@@ -47,7 +47,7 @@ Executed only when the received type is `Either.Left`.
 ```kotlin
 getScores()
     .onError {
-        // handle error only
+        // handle error
     }
 ```
 
@@ -60,11 +60,13 @@ both possible outcomes.
 ```kotlin
 getScores()
     .onResult(
+        // only executed if received type is Either.Right
         onError = {
-            // handle both
+            // handle error
         },
+        // only executed if received type is Either.Left
         onSuccess = {
-            // will execute because result is of type Either.Right
+            // handle success
         }
     )
 ```
