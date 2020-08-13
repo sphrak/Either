@@ -8,6 +8,62 @@ A container type for representing values. The `Either` type represents values wi
 
 The `Either` type is sometimes used to represent a value which is either correct or an error; by convention, the `Either.Left` constructor is used to hold an error value and the `Either.Right` constructor is used to hold a correct value (mnemonic: "right" also means "correct").
 
+## Usage
+
+#### Example
+
+```kotlin
+object Failure
+
+var shouldFail = false
+
+fun getNetworkScores(): Either<Failure, List<Int> {
+    if (shouldFail) {
+        shouldFail = false
+        return Either.Left(Failure)
+    }
+    shouldFail = true
+    return Either.Right(listOf(11, 51, 27, 62, 12, 61))
+}
+```
+
+#### Either.Right
+Executed only when the received type is `Either.Right`.
+
+```kotlin
+getNetworkScores()
+    .onSuccess { listOfScore: List<Int>
+        // will execute because result is of type Either.Right
+        listOfScore.forEach { println(it) }
+    }
+```
+
+#### Either.Left
+Executed only when the received type is `Either.Left`.
+
+```kotlin
+getScores()
+    .onError {
+        // wont execute because result is not of type Either.Right
+    }
+```
+
+#### Both
+Handle both `Either.Left` and `Either.Right` depending on what result is received. This is useful when you want to exhaust
+the possible outcomes.
+
+```kotlin
+getScores()
+    .onResult(
+        onError = {
+            // handle both
+        },
+        onSuccess = {
+            // will execute because result is of type Either.Right
+        }
+    )
+```
+
 ### Download 
 Make sure that you have either `jcenter()` or `mavenCentral()` in the list of repositories.
 ```groovy
@@ -19,13 +75,13 @@ repositories {
 **build.gradle:**
 
 ```groovy
-implementation "io.github.sphrak:either:1.1.0"
+implementation "io.github.sphrak:either:1.2.0"
 ```
 
 **build.gradle.kts:**
 
 ```kotlin
-implementation("io.github.sphrak:either:1.1.0")
+implementation("io.github.sphrak:either:1.2.0")
 ```
 
 ### License

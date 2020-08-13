@@ -11,6 +11,7 @@ This release includes some extension functions to make code more readable.
 * Added `Either<R>.onSuccess` -- extension function to handle `Right` case
 * Added `Either<L>.onLeft` -- extension function to handle `Left` case
 * Added `Either<L>.onFailure` -- extension function to handle `Left` case
+* Added basic usage samples
 
 ## [1.1.0] -- 2020-04-29
 
