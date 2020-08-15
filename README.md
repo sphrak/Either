@@ -8,8 +8,75 @@ A container type for representing values. The `Either` type represents values wi
 
 The `Either` type is sometimes used to represent a value which is either correct or an error; by convention, the `Either.Left` constructor is used to hold an error value and the `Either.Right` constructor is used to hold a correct value (mnemonic: "right" also means "correct").
 
+* [Usage](https://github.com/sphrak/Either#usage)
+* [Download](https://github.com/sphrak/Either#download)
+* [License](https://github.com/sphrak/Either#license)
+
+## Usage
+
+#### Example
+
+```kotlin
+object Failure
+
+var shouldFail = false
+
+fun getNetworkScores(): Either<Failure, List<Int> {
+    if (shouldFail) {
+        shouldFail = false
+        return Either.Left(Failure)
+    }
+    shouldFail = true
+    return Either.Right(listOf(11, 51, 27, 62, 12, 61))
+}
+```
+
+#### Either.Right
+Executed only when the received type is `Either.Right`.
+
+```kotlin
+getNetworkScores()
+    .onSuccess { listOfScore: List<Int>
+        // print scores in success case only
+        listOfScore.forEach { println(it) }
+    }
+
+```
+
+`onRight` and `onSuccess` are semantically the same
+
+#### Either.Left
+Executed only when the received type is `Either.Left`.
+
+```kotlin
+getScores()
+    .onError {
+        // handle error
+    }
+```
+
+`onLeft` and `onFailure` are semantically the same
+
+#### Both
+Handle both `Either.Left` and `Either.Right` depending on what result is received. This is useful for exhausting
+both possible outcomes.
+
+```kotlin
+getScores()
+    .onResult(
+        // only executed if received type is Either.Right
+        onError = {
+            // handle error
+        },
+        // only executed if received type is Either.Left
+        onSuccess = {
+            // handle success
+        }
+    )
+```
+
 ### Download 
-Make sure that you have either `jcenter()` or `mavenCentral()` in the list of repositories.
+Make sure to have either `jcenter()` or `mavenCentral()` in the list of repositories.
 ```groovy
 repositories {
     jcenter()
@@ -19,13 +86,13 @@ repositories {
 **build.gradle:**
 
 ```groovy
-implementation "io.github.sphrak:either:1.1.0"
+implementation "io.github.sphrak:either:1.2.0"
 ```
 
 **build.gradle.kts:**
 
 ```kotlin
-implementation("io.github.sphrak:either:1.1.0")
+implementation("io.github.sphrak:either:1.2.0")
 ```
 
 ### License

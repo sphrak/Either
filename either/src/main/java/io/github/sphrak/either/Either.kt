@@ -34,7 +34,7 @@ sealed class Either<out L0, out R0> {
         }
 }
 
-fun <A, B, C> ((A) -> B).c(fn: (B) -> C): (A) -> C = {
+internal fun <A, B, C> ((A) -> B).c(fn: (B) -> C): (A) -> C = {
     fn(this(it))
 }
 

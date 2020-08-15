@@ -2,6 +2,20 @@
 
 ## [Unreleased]
 
+## [1.2.0] -- 2020-08-*
+
+This release includes some extension functions to make code more human readable.
+
+### Added
+* Added `Either<R>.onRight` -- extension function to handle `Right` case
+* Added `Either<R>.onSuccess` -- extension function to handle `Right` case
+* Added `Either<L>.onLeft` -- extension function to handle `Left` case
+* Added `Either<L>.onFailure` -- extension function to handle `Left` case
+* Added basic usage samples to [README](https://github.com/sphrak/Either/blob/master/README.md)
+
+### Removed
+* `<A, B, C>.c()` extension function has received `internal` visibility modifier
+
 ## [1.1.0] -- 2020-04-29
 
 ### Added
@@ -29,7 +43,8 @@
 ### Added
 * Initial release
 
-[Unreleased]: https://github.com/sphrak/Either/compare/1.1.0...HEAD
+[Unreleased]: https://github.com/sphrak/Either/compare/1.2.0...HEAD
+[1.2.0]: https://github.com/sphrak/Either/compare/1.1.0...1.2.0
 [1.1.0]: https://github.com/sphrak/Either/compare/1.0.2...1.1.0
 [1.0.2]: https://github.com/sphrak/Either/compare/1.0.1...1.0.2
 [1.0.1]: https://github.com/sphrak/Either/compare/1.0.0...1.0.1

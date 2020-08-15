@@ -1,6 +1,44 @@
+/*
+ * Copyright (c) 2020 Niclas Kron.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package io.github.sphrak.either.extension
 
 import io.github.sphrak.either.Either
 
-fun <T> T.asLeft(): Either.Left<T> = Either.Left(this)
-fun <T> T.asRight(): Either.Right<T> = Either.Right(this)
+public fun <T> T.asLeft(): Either.Left<T> = Either.Left(this)
+public fun <T> T.asRight(): Either.Right<T> = Either.Right(this)
+
+public inline fun <L, R> Either<L, R>.onLeft(fn: (L) -> Unit) =
+    when (this) {
+        is Either.Left -> fn(a)
+        is Either.Right -> Unit
+    }
+
+public inline fun <L, R> Either<L, R>.onRight(fn: (R) -> Unit) =
+    when (this) {
+        is Either.Left -> Unit
+        is Either.Right -> fn(b)
+    }
+
+public fun <L, R> Either<L, R>.onError(fn: (L) -> Unit) = onLeft(fn)
+
+public inline fun <L, R> Either<L, R>.onSuccess(fn: (R) -> Unit) = onRight(fn)
+
+public inline fun <L, R> Either<L, R>.onResult(onError: (L) -> Unit, onSuccess: (R) -> Unit) =
+    when (this) {
+        is Either.Left -> onError(a)
+        is Either.Right -> onSuccess(b)
+    }
