@@ -35,7 +35,19 @@ public inline fun <L, R> Either<L, R>.onRight(fn: (R) -> Unit) =
 
 public fun <L, R> Either<L, R>.onError(fn: (L) -> Unit) = onLeft(fn)
 
+public fun <L, R> Either<L, R>.onError(fn: (L) -> Either<L, R>): Either<L, R> =
+    when (this) {
+        is Either.Left -> fn(a)
+        is Either.Right -> Either.Right(b)
+    }
+
 public inline fun <L, R> Either<L, R>.onSuccess(fn: (R) -> Unit) = onRight(fn)
+
+public fun <L, R> Either<L, R>.onSuccess(fn: (R) -> Either<L, R>): Either<L, R> =
+    when (this) {
+        is Either.Left -> Either.Left(a)
+        is Either.Right -> fn(b)
+    }
 
 public inline fun <L, R> Either<L, R>.onResult(onError: (L) -> Unit, onSuccess: (R) -> Unit) =
     when (this) {
