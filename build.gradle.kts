@@ -4,9 +4,10 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath("com.android.tools.build:gradle:3.6.1")
-        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.3.72")
+        classpath("com.android.tools.build:gradle:4.1.0")
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.4.10")
         classpath("com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.4")
+        classpath("org.jetbrains.dokka:dokka-gradle-plugin:1.4.10.2")
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle.kts files
     }
@@ -18,7 +19,7 @@ allprojects {
         mavenCentral()
     }
 
-    version = "1.2.0"
+    version = "1.3.0"
     group = "io.github.sphrak"
 }
 

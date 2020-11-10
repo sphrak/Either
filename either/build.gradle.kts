@@ -24,6 +24,7 @@ plugins {
     id("com.github.johnrengelman.shadow") version "5.2.0"
     `maven-publish`
     id("com.jfrog.bintray")
+    id("org.jetbrains.dokka")
 }
 
 val artifactId = "either"
@@ -51,7 +52,7 @@ val inputFiles = project.fileTree(mapOf("dir" to "src", "include" to "**/*.kt"))
 
 dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version")
-    ktlint("com.pinterest:ktlint:0.36.0")
+    ktlint("com.pinterest:ktlint:0.39.0")
     testImplementation("org.junit.jupiter:junit-jupiter:5.5.1")
     testImplementation("org.assertj:assertj-core:3.13.2")
 }
@@ -120,5 +121,25 @@ tasks {
         classpath = configurations["ktlint"]
         main = "com.pinterest.ktlint.Main"
         args = listOf("-F", "src/**/*.kt")
+    }
+}
+
+tasks.dokkaHtml.configure {
+    outputDirectory.set(File("docs"))
+
+    dokkaSourceSets {
+        named("main") {
+            noAndroidSdkLink.set(false)
+        }
+    }
+}
+
+tasks.dokkaJekyll.configure {
+    outputDirectory.set(File("docs"))
+
+    dokkaSourceSets {
+        named("main") {
+            noAndroidSdkLink.set(false)
+        }
     }
 }

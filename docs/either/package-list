@@ -1,0 +1,6 @@
+$dokka.format:jekyll-v1
+$dokka.linkExtension:md
+
+io.github.sphrak.either
+io.github.sphrak.either.extension
+
