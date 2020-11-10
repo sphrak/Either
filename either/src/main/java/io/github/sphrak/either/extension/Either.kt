@@ -17,8 +17,8 @@
 package io.github.sphrak.either.extension
 
 import io.github.sphrak.either.Either
-import io.github.sphrak.either.c
-import io.github.sphrak.either.flatMap
+import io.github.sphrak.either.cSuspend
+import io.github.sphrak.either.flatMapSuspend
 
 /**
  *  [asLeft] Convenience function to wrap a value type [T] in [Either.Left]
@@ -119,7 +119,7 @@ public suspend fun <T, L, R> Either<L, R>.eitherSuspend(onError: suspend (L) -> 
  *  @param [fn] lambda to be executed in case of [Either.Right<R>]
  *  @return Either<L, R>
  */
-public suspend fun <T, L, R> Either<L, R>.map(fn: suspend (R) -> (T)): Either<L, T> = this.flatMap(fn.c(::right))
+public suspend fun <T, L, R> Either<L, R>.mapSuspend(fn: suspend (R) -> (T)): Either<L, T> = this.flatMapSuspend(fn.cSuspend(::right))
 
 /**
  *  [getRightOrNull] Access the value of [Either.Right] or `null`
