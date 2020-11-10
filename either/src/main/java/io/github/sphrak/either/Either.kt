@@ -88,6 +88,10 @@ internal fun <A, B, C> ((A) -> B).c(fn: (B) -> C): (A) -> C = {
     fn(this(it))
 }
 
+internal suspend fun <A, B, C> (suspend (A) -> B).c(fn: suspend (B) -> C): suspend (A) -> C = {
+    fn(this(it))
+}
+
 /**
  *  [Either.flatMap] Gives access to value [R] in a lambda if the instance is of [Either.Right] and wraps
  *  and returns the resulting computation in the lambda in Either<L, R>
@@ -98,7 +102,25 @@ internal fun <A, B, C> ((A) -> B).c(fn: (B) -> C): (A) -> C = {
  *  @param [fn] lambda to be executed in case of [Either.Right<R>]
  *  @return Either<L, R>
  */
-public inline fun <T, L, R> Either<L, R>.flatMap(fn: (R) -> Either<L, T>): Either<L, T> =
+public fun <T, L, R> Either<L, R>.flatMap(fn: (R) -> Either<L, T>): Either<L, T> =
+    when (this) {
+        is Either.Left -> this
+        is Either.Right -> fn(b)
+    }
+
+/**
+ *  [Either.flatMap] Suspending version of [flatMap]
+ *
+ *  Gives access to value [R] in a lambda if the instance is of [Either.Right] and wraps
+ *  and returns the resulting computation in the lambda in Either<L, R>
+ *
+ *  If the instance is [Either.Left] that is returned and lambda [fn] will not be executed.
+ *
+ *  @receiver [Either.Right]
+ *  @param [fn] lambda to be executed in case of [Either.Right<R>]
+ *  @return Either<L, R>
+ */
+public suspend fun <T, L, R> Either<L, R>.flatMap(fn: suspend (R) -> Either<L, T>): Either<L, T> =
     when (this) {
         is Either.Left -> this
         is Either.Right -> fn(b)

@@ -88,8 +88,8 @@ public inline fun <T, L, R> Either<L, R>.onResult(onError: (L) -> T, onSuccess: 
  *
  *  @return [T] value [T] of [Either.Left] or [Either.Right]
  */
-public suspend inline fun <T, L, R> Either<L, R>.onResultSuspend(onError: (L) -> T, onSuccess: (R) -> T): T =
-    either(fnL = onError, fnR = onSuccess)
+public suspend fun <T, L, R> Either<L, R>.onResultSuspend(onError: suspend (L) -> T, onSuccess: suspend (R) -> T): T =
+    eitherSuspend(onError = onError, onSuccess = onSuccess)
 
 /**
  *  [eitherSuspend] Resolve either case [Either.Right] or case [Either.Left]. This is analogues to [Either.either].
@@ -101,11 +101,14 @@ public suspend inline fun <T, L, R> Either<L, R>.onResultSuspend(onError: (L) ->
  *
  *  @return [T] value [T] of [Either.Left] or [Either.Right]
  */
-public suspend inline fun <T, L, R> Either<L, R>.eitherSuspend(onError: (L) -> T, onSuccess: (R) -> T): T =
-    either(fnL = onError, fnR = onSuccess)
+public suspend fun <T, L, R> Either<L, R>.eitherSuspend(onError: suspend (L) -> T, onSuccess: suspend (R) -> T): T =
+    when (this) {
+        is Either.Left -> onError(a)
+        is Either.Right -> onSuccess(b)
+    }
 
 /**
- *  [Either.mapSuspend] is a suspending version of [Either.map]
+ *  [Either.map] is a suspending version of [Either.map]
  *
  *  Gives access to value [R] in a lambda if the instance is of [Either.Right] and wraps
  *  and returns the resulting computation in the lambda in Either<L, R>.
@@ -116,7 +119,7 @@ public suspend inline fun <T, L, R> Either<L, R>.eitherSuspend(onError: (L) -> T
  *  @param [fn] lambda to be executed in case of [Either.Right<R>]
  *  @return Either<L, R>
  */
-public suspend fun <T, L, R> Either<L, R>.mapSuspend(fn: (R) -> (T)): Either<L, T> = this.flatMap(fn.c(::right))
+public suspend fun <T, L, R> Either<L, R>.map(fn: suspend (R) -> (T)): Either<L, T> = this.flatMap(fn.c(::right))
 
 /**
  *  [getRightOrNull] Access the value of [Either.Right] or `null`

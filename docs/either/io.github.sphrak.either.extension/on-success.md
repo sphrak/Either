@@ -12,7 +12,7 @@ fun <[L](on-success.md), [R](on-success.md)> [Either](../io.github.sphrak.either
 More info  
 
 
-[onSuccess](on-success.md) analogues to Either.map
+[onSuccess](on-success.md) analogues to [Either.map](map.md)
 
 
 
