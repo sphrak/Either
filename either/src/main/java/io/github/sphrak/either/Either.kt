@@ -102,7 +102,7 @@ internal suspend fun <A, B, C> (suspend (A) -> B).cSuspend(fn: suspend (B) -> C)
  *  @param [fn] lambda to be executed in case of [Either.Right<R>]
  *  @return Either<L, R>
  */
-public fun <T, L, R> Either<L, R>.flatMap(fn: (R) -> Either<L, T>): Either<L, T> =
+public inline fun <T, L, R> Either<L, R>.flatMap(fn: (R) -> Either<L, T>): Either<L, T> =
     when (this) {
         is Either.Left -> this
         is Either.Right -> fn(b)
@@ -120,7 +120,7 @@ public fun <T, L, R> Either<L, R>.flatMap(fn: (R) -> Either<L, T>): Either<L, T>
  *  @param [fn] lambda to be executed in case of [Either.Right<R>]
  *  @return Either<L, R>
  */
-public suspend fun <T, L, R> Either<L, R>.flatMapSuspend(fn: suspend (R) -> Either<L, T>): Either<L, T> =
+public suspend inline fun <T, L, R> Either<L, R>.flatMapSuspend(fn: (R) -> Either<L, T>): Either<L, T> =
     when (this) {
         is Either.Left -> this
         is Either.Right -> fn(b)
