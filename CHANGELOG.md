@@ -2,7 +2,7 @@
 
 ## [Unreleased]
 
-## [2.0.0] -- 2020-11-10 🍂
+## [2.0.0] -- 2020-11-12 🍂
 
 This is a major release and contains breaking changes. Several new methods have been added
 to make it easier to interact with the `Either` type and this release aims to allow for
