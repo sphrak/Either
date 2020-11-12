@@ -12,7 +12,7 @@ fun <[L](on-error.md), [R](on-error.md)> [Either](../io.github.sphrak.either/-ei
 More info  
 
 
-[onError](on-error.md) analogues to [Either.map](map.md) but for [Either.Left](../io.github.sphrak.either/-either/-left/index.md)
+[onError](on-error.md) analogues to Either.map but for [Either.Left](../io.github.sphrak.either/-either/-left/index.md)
 
 
 

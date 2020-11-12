@@ -20,9 +20,12 @@ import io.github.sphrak.either.extension.asLeft
 import io.github.sphrak.either.extension.asRight
 import io.github.sphrak.either.extension.getLeftOrNull
 import io.github.sphrak.either.extension.getRightOrNull
+import io.github.sphrak.either.extension.mapSuspend
 import io.github.sphrak.either.extension.onError
 import io.github.sphrak.either.extension.onResult
+import io.github.sphrak.either.extension.onResultSuspend
 import io.github.sphrak.either.extension.onSuccess
+import kotlinx.coroutines.runBlocking
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -140,5 +143,30 @@ class EitherTest {
 
         assertThat(text).isEqualTo(null)
         assertThat(failureText).isEqualTo("error occurred")
+    }
+
+    @Test
+    fun `test map suspend`(): Unit = runBlocking {
+
+        val result = "asdf".asRight()
+
+        result.mapSuspend {
+            assertThat("asdf").isEqualTo(result.b)
+        }
+    }
+
+    @Test
+    fun `test on result suspend`(): Unit = runBlocking {
+
+        val either = "asdf".asRight()
+
+        either.onResultSuspend(
+            onError = {
+                // no no
+            },
+            onSuccess = {
+                assertThat("asdf").isEqualTo(either.b)
+            }
+        )
     }
 }

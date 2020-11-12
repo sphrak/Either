@@ -108,7 +108,7 @@ public suspend fun <T, L, R> Either<L, R>.eitherSuspend(onError: suspend (L) -> 
     }
 
 /**
- *  [Either.map] is a suspending version of [Either.map]
+ *  [Either.mapSuspend] is a suspending version of [Either.map]
  *
  *  Gives access to value [R] in a lambda if the instance is of [Either.Right] and wraps
  *  and returns the resulting computation in the lambda in Either<L, R>.
