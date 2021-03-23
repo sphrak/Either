@@ -17,8 +17,6 @@ import com.jfrog.bintray.gradle.BintrayExtension
  * limitations under the License.
  */
 
-val kotlin_version: String by project
-
 plugins {
     kotlin("jvm")
     id("com.github.johnrengelman.shadow") version "5.2.0"
@@ -51,7 +49,7 @@ val outputDir = "${project.buildDir}/reports/ktlint/"
 val inputFiles = project.fileTree(mapOf("dir" to "src", "include" to "**/*.kt"))
 
 dependencies {
-    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.4.31")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.1")
     ktlint("com.pinterest:ktlint:0.39.0")
     testImplementation("org.junit.jupiter:junit-jupiter:5.5.1")
