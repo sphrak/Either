@@ -2,6 +2,15 @@
 
 ## [Unreleased]
 
+## [2.1.0] -- 2021-03-25 🧩
+
+### Changed
+
+* Bump Kotlin 1.4.31
+* Bump Gradle 6.8.3
+* Added suspending `map` function
+* Added suspending `flatMap` function
+
 ## [2.0.0] -- 2020-11-12 🍂
 
 This is a major release and contains breaking changes. Several new methods have been added
@@ -61,7 +70,8 @@ This release includes some extension functions to make code more human readable.
 ### Added
 * Initial release
 
-[Unreleased]: https://github.com/sphrak/Either/compare/2.0.0...HEAD
+[Unreleased]: https://github.com/sphrak/Either/compare/2.1.0...HEAD
+[2.1.0]: https://github.com/sphrak/Either/compare/2.0.0...2.1.0
 [2.0.0]: https://github.com/sphrak/Either/compare/1.2.0...2.0.0
 [1.2.0]: https://github.com/sphrak/Either/compare/1.1.0...1.2.0
 [1.1.0]: https://github.com/sphrak/Either/compare/1.0.2...1.1.0

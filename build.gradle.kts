@@ -19,7 +19,7 @@ allprojects {
         mavenCentral()
     }
 
-    version = "2.0.0"
+    version = "2.1.0"
     group = "io.github.sphrak"
 }
 
