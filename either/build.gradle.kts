@@ -70,6 +70,15 @@ project.afterEvaluate {
 
                 artifact(shadowJar)
                 artifact(sourcesJar.get())
+
+                pom {
+                    licenses {
+                        license {
+                            name.set("The Apache License, Version 2.0")
+                            url.set("http://www.apache.org/licenses/LICENSE-2.0.txt")
+                        }
+                    }
+                }
                 groupId = project.group as String
                 artifactId = artifactId
                 version = project.version as String
