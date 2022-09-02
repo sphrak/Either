@@ -1,5 +1,4 @@
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
-import com.jfrog.bintray.gradle.BintrayExtension
 
 /*
  * Copyright (c) 2019 Niclas Kron.
@@ -21,7 +20,6 @@ plugins {
     kotlin("jvm")
     id("com.github.johnrengelman.shadow") version "5.2.0"
     `maven-publish`
-    id("com.jfrog.bintray")
     id("org.jetbrains.dokka")
 }
 
@@ -40,8 +38,8 @@ tasks.withType<Test> {
 }
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_1_8
-    targetCompatibility = JavaVersion.VERSION_1_8
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
 }
 
 val ktlint: Configuration = configurations.create("ktlint")
@@ -49,8 +47,8 @@ val outputDir = "${project.buildDir}/reports/ktlint/"
 val inputFiles = project.fileTree(mapOf("dir" to "src", "include" to "**/*.kt"))
 
 dependencies {
-    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.5.10")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.0")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.7.10")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")
     ktlint("com.pinterest:ktlint:0.40.0")
     testImplementation("org.junit.jupiter:junit-jupiter:5.5.1")
     testImplementation("org.assertj:assertj-core:3.13.2")
@@ -89,26 +87,6 @@ project.afterEvaluate {
 
 
 fun findProperty(s: String) = project.findProperty(s) as String?
-
-bintray {
-    user = System.getenv("BINTRAY_USER")
-    key = System.getenv("BINTRAY_API_KEY")
-    publish = true
-    setPublications("mavenJava")
-    pkg(
-        delegateClosureOf<BintrayExtension.PackageConfig> {
-            repo = "either"
-            name = artifactId
-            vcsUrl = "https://github.com/sphrak/either.git"
-
-            version(
-                delegateClosureOf<BintrayExtension.VersionConfig> {
-                    name = project.version as String
-                }
-            )
-        }
-    )
-}
 
 tasks {
 

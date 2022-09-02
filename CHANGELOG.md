@@ -2,6 +2,16 @@
 
 ## [Unreleased]
 
+## [2.2.0] -- 2022-09-02 🍂
+
+### Changed
+
+- bintray is removed and lib is now published to jitpack instead
+- kotlin 1.7.10
+- gradle 7.5.1
+- target jdk 11
+- kotlinx.coroutines 1.6.4
+
 ## [2.1.1] -- 2021-06-08 🌻
 
 ### Changed
@@ -79,7 +89,8 @@ This release includes some extension functions to make code more human readable.
 ### Added
 * Initial release
 
-[Unreleased]: https://github.com/sphrak/Either/compare/2.1.1...HEAD
+[Unreleased]: https://github.com/sphrak/Either/compare/2.2.0...HEAD
+[2.2.0]: https://github.com/sphrak/Either/compare/2.1.1...2.2.0
 [2.1.1]: https://github.com/sphrak/Either/compare/2.1.0...2.1.1
 [2.1.0]: https://github.com/sphrak/Either/compare/2.0.0...2.1.0
 [2.0.0]: https://github.com/sphrak/Either/compare/1.2.0...2.0.0
