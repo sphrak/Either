@@ -1,3 +1,4 @@
+[![](https://jitpack.io/v/sphrak/Either.svg)](https://jitpack.io/#sphrak/Either)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://github.com/sphrak/Either/blob/master/LICENSE)
 
 # Either
