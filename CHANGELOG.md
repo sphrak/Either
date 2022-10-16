@@ -2,6 +2,12 @@
 
 ## [Unreleased]
 
+## [2.2.1] -- 2022-10-16 
+
+### Changed
+
+* kotlin 1.7.20
+
 ## [2.2.0] -- 2022-09-02 🍂
 
 ### Changed
@@ -89,7 +95,8 @@ This release includes some extension functions to make code more human readable.
 ### Added
 * Initial release
 
-[Unreleased]: https://github.com/sphrak/Either/compare/2.2.0...HEAD
+[Unreleased]: https://github.com/sphrak/Either/compare/2.2.1...HEAD
+[2.2.0]: https://github.com/sphrak/Either/compare/2.2.0...2.2.1
 [2.2.0]: https://github.com/sphrak/Either/compare/2.1.1...2.2.0
 [2.1.1]: https://github.com/sphrak/Either/compare/2.1.0...2.1.1
 [2.1.0]: https://github.com/sphrak/Either/compare/2.0.0...2.1.0

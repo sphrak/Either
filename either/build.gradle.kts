@@ -47,7 +47,7 @@ val outputDir = "${project.buildDir}/reports/ktlint/"
 val inputFiles = project.fileTree(mapOf("dir" to "src", "include" to "**/*.kt"))
 
 dependencies {
-    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.7.10")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.7.20")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")
     ktlint("com.pinterest:ktlint:0.40.0")
     testImplementation("org.junit.jupiter:junit-jupiter:5.5.1")
