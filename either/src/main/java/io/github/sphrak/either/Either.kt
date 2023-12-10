@@ -16,124 +16,121 @@
 
 package io.github.sphrak.either
 
+
 /**
- *  [Either] is a monad or result type used to indicate two possible outcomes of a computation
+ * [Either] represents a value of one of two possible types (a disjoint union)
  *
- *  [Either.Right] and [Either.Left] can be used interchangeably to indicate a left or a right outcome
- *  of a computation.
- *
- *  By convention [Either.Left] is often used to indicate an fault or an erroneous computation result.
- *  Because of this methods like `onError`, `onSuccess`, `onResult` exists to allow for more human readable code
- *
- *  @property [isRight] boolean value indicating whether instance is of type [Either.Right]
- *  @property [isLeft] boolean value indicating whether instance is of type [Either.Left]
+ * Instances of [Either] are either an instance of [Left] or [Right].
  */
-public sealed class Either<out L, out R> {
+public sealed interface Either<out L, out R> {
 
     /**
-     *  [Left] wrap a value [a] in [Either.Left]
+     * Represents the left side of [Either] class, typically used for error handling.
      *
-     *  By convention is [Left] used for erroneous states
-     *
-     *  @param [a] of type [L] the left-hand side value
-     *  @return [Either<L, Nothing>]
+     * @param a The value of the left side.
      */
-    data class Left<out L>(val a: L) : Either<L, Nothing>()
+    data class Left<out L>(val a: L) : Either<L, Nothing>
 
     /**
-     *  [Right] wrap a value [b] in [Either.Right]
-     *
-     *  By convention is [Right] used for successful states
-     *
-     *  @param [b] of type [R] the right-hand side value
-     *  @return [Either<Nothing, R>]
+     * Represents the right side of [Either] class
+     * Mnemonically "Right" can be remembered as the "correct" or "right" outcome.
+     * @param b The value of the right side.
      */
-    data class Right<out R>(val b: R) : Either<Nothing, R>()
+    data class Right<out R>(val b: R) : Either<Nothing, R>
 
     /**
-     *  [isRight] A boolean value indicating whether [Either] is of type [Either.Right]
+     * Checks if the instance is of type [Right].
      *
-     *  @return `true` or `false`
+     * @return `true` if this is a [Right] instance, `false` otherwise.
      */
     val isRight: Boolean get() = this is Right<R>
 
     /**
-     *  [isLeft] A boolean value indicating whether [Either] is of type [Either.Left]
+     * Checks if the instance is of type [Left].
      *
-     *  @return `true` or `false`
+     * @return `true` if this is a [Left] instance, `false` otherwise.
      */
     val isLeft: Boolean get() = this is Left<L>
 
+    /**
+     * Creates a [Left] instance with the given value.
+     *
+     * @param a The value for the left side.
+     * @return An instance of [Left].
+     */
     fun <L> left(a: L): Left<L> = Left(a)
+
+    /**
+     * Creates a [Right] instance with the given value.
+     *
+     * @param b The value for the right side.
+     * @return An instance of [Right].
+     */
     fun <R> right(b: R): Right<R> = Right(b)
 
     /**
-     *  [either] resolve case [Either.Right] and case [Either.Left] by passing lambdas [fnL] and [fnR].
+     * Applies one of the given functions based on the type of this [Either].
      *
-     *  @receiver [Either.Left]
-     *  @receiver [Either.Right]
-     *  @param [fnL] lambda to execute when instance is of type Either.Left
-     *  @param [fnR] lambda to execute when instance is of type Either.Right
+     * @param fnL Function to apply if this is a [Left].
+     * @param fnR Function to apply if this is a [Right].
      *
-     *  @return [T] value of [Either.Left<T>] or [Either.Right<T>]
+     * @return Result of applying the function.
      */
-    public inline fun <T> either(fnL: (L) -> T, fnR: (R) -> T): T =
+    fun <T> either(fnL: (L) -> T, fnR: (R) -> T): T =
         when (this) {
             is Left -> fnL(a)
             is Right -> fnR(b)
         }
 }
 
-internal fun <A, B, C> ((A) -> B).c(fn: (B) -> C): (A) -> C = {
-    fn(this(it))
+/**
+ * Transforms the value of this [Either] using the given function, preserving the side.
+ *
+ * @param fnL Function to apply if this is a [Either.Left].
+ * @param fnR Function to apply if this is a [Either.Right].
+ *
+ * @return Transformed [Either] instance.
+ */
+public inline fun <T, L, R> Either<L, R>.flatMap(
+    fnL: ((L) -> Either<L, T>) = ::left,
+    fnR: (R) -> Either<L, T>
+): Either<L, T> = when (this) {
+    is Either.Left -> fnL(a)
+    is Either.Right -> fnR(b)
 }
 
-internal suspend fun <A, B, C> (suspend (A) -> B).cSuspend(fn: suspend (B) -> C): suspend (A) -> C = {
-    fn(this(it))
+/**
+ * Transforms the value of this [Either] using the given function, preserving the side.
+ *
+ * @param fnL Function to apply if this is a [Either.Left].
+ * @param fnR Function to apply if this is a [Either.Right].
+ * @return Transformed [Either] instance.
+ */
+public inline fun <T, L, R> Either<L, R>.map(
+    fnL: (L) -> (L) = { left -> left },
+    fnR: (R) -> (T)
+): Either<L, T> = when (this) {
+    is Either.Left -> fnL(this.a).asLeft()
+    is Either.Right -> fnR(this.b).asRight()
 }
 
 /**
- *  [Either.flatMap] Gives access to value [R] in a lambda if the instance is of [Either.Right] and wraps
- *  and returns the resulting computation in the lambda in Either<L, R>
+ * Wraps a value into a [Either.Left] instance of [Either].
  *
- *  If the instance is [Either.Left] that is returned and lambda [fn] will not be executed.
- *
- *  @receiver [Either.Right]
- *  @param [fn] lambda to be executed in case of [Either.Right<R>]
- *  @return Either<L, R>
+ * @param T The type of the value.
+ * @return An instance of [Either.Left] containing the value.
  */
-public inline fun <T, L, R> Either<L, R>.flatMap(fn: (R) -> Either<L, T>): Either<L, T> =
-    when (this) {
-        is Either.Left -> this
-        is Either.Right -> fn(b)
-    }
+public fun <T> T.asLeft(): Either.Left<T> = Either.Left(this)
 
 /**
- *  [Either.flatMapSuspend] Suspending version of [flatMap]
+ * Wraps a value into a [Either.Right] instance of [Either].
  *
- *  Gives access to value [R] in a lambda if the instance is of [Either.Right] and wraps
- *  and returns the resulting computation in the lambda in Either<L, R>
- *
- *  If the instance is [Either.Left] that is returned and lambda [fn] will not be executed.
- *
- *  @receiver [Either.Right]
- *  @param [fn] lambda to be executed in case of [Either.Right<R>]
- *  @return Either<L, R>
+ * @param T The type of the value.
+ * @return An instance of [Either.Right] containing the value.
  */
-public suspend inline fun <T, L, R> Either<L, R>.flatMapSuspend(fn: (R) -> Either<L, T>): Either<L, T> =
-    when (this) {
-        is Either.Left -> this
-        is Either.Right -> fn(b)
-    }
+public fun <T> T.asRight(): Either.Right<T> = Either.Right(this)
 
-/**
- *  [Either.map] Gives access to value [R] in a lambda if the instance is of [Either.Right] and wraps
- *  and returns the resulting computation in the lambda in Either<L, R>
- *
- *  If the instance is [Either.Left] that is returned and lambda [fn] will not be executed.
- *
- *  @receiver [Either.Right]
- *  @param [fn] lambda to be executed in case of [Either.Right<R>]
- *  @return Either<L, R>
- */
-public fun <T, L, R> Either<L, R>.map(fn: (R) -> (T)): Either<L, T> = this.flatMap(fn.c(::right))
+
+public val <L, R> Either<L, R>.rightOrNull get() = if (this is Either.Right<R>) this.b else null
+
+public val <L, R> Either<L, R>.leftOrNull get() = if (this is Either.Left<L>) this.a else null

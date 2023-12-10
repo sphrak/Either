@@ -16,20 +16,16 @@
 
 package io.github.sphrak.either
 
-import io.github.sphrak.either.extension.asLeft
-import io.github.sphrak.either.extension.asRight
-import io.github.sphrak.either.extension.getLeftOrNull
-import io.github.sphrak.either.extension.getRightOrNull
-import io.github.sphrak.either.extension.mapSuspend
-import io.github.sphrak.either.extension.onError
-import io.github.sphrak.either.extension.onResult
-import io.github.sphrak.either.extension.onResultSuspend
-import io.github.sphrak.either.extension.onSuccess
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.StandardTestDispatcher
+import kotlinx.coroutines.test.runTest
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
+private const val s = "original value"
+
 class EitherTest {
+
+    private val standardTestDispatcher = StandardTestDispatcher()
 
     @Test
     fun `test either right return correct type of instance`() {
@@ -68,105 +64,89 @@ class EitherTest {
     }
 
     @Test
-    fun `test on success when right`() {
-
-        val either: Either.Right<String> = Either.Right("aaaaaaaa")
-
-        either
-            .onSuccess {
-                assertThat(it).isEqualTo("aaaaaaaa")
-                it.asRight()
-            }
-    }
-
-    @Test
-    fun `test on error when left`() {
-
-        val either: Either.Left<String> = Either.Left("bbbbbbbb")
-
-        either
-            .onError {
-                assertThat(it).isEqualTo("bbbbbbbb")
-                it.asLeft()
-            }
-    }
-
-    @Test
-    fun `test on result when left`() {
-
-        val either: Either.Left<String> = Either.Left("failure")
-
-        either
-            .onResult(
-                onError = {
-                    assertThat(it).isEqualTo("failure")
-                },
-                onSuccess = {
-                    // no op
-                }
-
-            )
-    }
-
-    @Test
-    fun `test on result when right`() {
-        val either: Either.Right<String> = Either.Right("success")
-
-        either
-            .onResult(
-                onError = {
-                    // no op
-                },
-                onSuccess = {
-
-                    assertThat(it).isEqualTo("success")
-                }
-            )
-    }
-
-    @Test
-    fun `test get nullable value of Either Right`() {
-
-        val result: Either.Right<String> = "hello its me".asRight()
-
-        val text: String? = result.getRightOrNull
-        assertThat("hello its me").isEqualTo(text)
-    }
-
-    @Test
-    fun `test right value is null when type right is called on instance of left`() {
-
-        val result: Either.Left<String> = "error occurred".asLeft()
-
-        val text: String? = result.getRightOrNull
-        val failureText = result.getLeftOrNull
-
-        assertThat(text).isEqualTo(null)
-        assertThat(failureText).isEqualTo("error occurred")
-    }
-
-    @Test
-    fun `test map suspend`(): Unit = runBlocking {
-
-        val result = "asdf".asRight()
-
-        result.mapSuspend {
-            assertThat("asdf").isEqualTo(result.b)
+    fun `test suspend call in map`() = runTest {
+        val first: () -> Either<String, Unit> = { Unit.asRight() }
+        val suspendCall: suspend () -> Unit = { Unit }
+        val a = first().map {
+            suspendCall()
         }
+
+        assertThat(a.isRight).isTrue()
     }
 
     @Test
-    fun `test on result suspend`(): Unit = runBlocking {
-
-        val either = "asdf".asRight()
-
-        either.onResultSuspend(
-            onError = {
-                // no no
+    fun `test suspend call on fnL in map`() = runTest {
+        val first: () -> Either<String, Unit> = { "failing fast".asLeft() }
+        val suspendCall: suspend () -> String = { "failing" }
+        val a = first().map(
+            fnL = {
+                suspendCall()
             },
-            onSuccess = {
-                assertThat("asdf").isEqualTo(either.b)
+            fnR = {
+                "nothing important happened on that day"
             }
         )
+
+        assertThat(a.isLeft).isTrue()
     }
+
+    @Test
+    fun `test suspend call in flatMap`() = runTest {
+        val first: () -> Either<String, Unit> = { Unit.asRight() }
+        val suspendCall: suspend () -> Either<String, String> = { "failing".asRight() }
+        val a = first().flatMap(
+            fnL = {
+                "err".asLeft()
+            },
+            fnR = {
+                suspendCall()
+            }
+        )
+
+        assertThat(a.isRight).isTrue()
+    }
+
+    @Test
+    fun `test suspend call on fnL in flatMap`() = runTest {
+        val first: () -> Either<String, Unit> = { Unit.asRight() }
+        val suspendCall: suspend () -> Either<String, String> = { "failing".asRight() }
+        val a = first().flatMap(
+            fnL = {
+                suspendCall()
+            },
+            fnR = {
+                suspendCall()
+            }
+        )
+
+        assertThat(a.isRight).isTrue()
+    }
+
+    @Test
+    fun `test nested flatMap calls with transformed return type`() = runTest {
+
+        data class ValueA(val value: String)
+        data class ValueB(val value: Int)
+        data class ValueC(val value: Long)
+
+        val firstCall: () -> Either<String, ValueA> = { ValueA("1337").asRight() }
+        val secondCall: (ValueA) -> Either<String, ValueB> = { ValueB(it.value.toInt()).asRight() }
+        val thirdCall: (ValueB) -> Either<String, ValueC> = { ValueC(it.value.toLong()).asRight() }
+
+        val result = firstCall()
+            .flatMap {
+                secondCall(it)
+            }
+            .flatMap {
+                thirdCall(it)
+            }
+
+        assertThat(result.rightOrNull).isEqualTo(ValueC(1337L))
+    }
+
+    @Test
+    fun `test nested flatMap calls that change the error type along the way`() = runTest {
+
+    }
+
 }
