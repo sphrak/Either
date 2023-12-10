@@ -1,24 +1,20 @@
 buildscript {
     repositories {
+        mavenCentral()
         google()
-        jcenter()
     }
     dependencies {
-        classpath("com.android.tools.build:gradle:4.1.2")
-        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.7.20")
-        classpath("org.jetbrains.dokka:dokka-gradle-plugin:1.4.10.2")
-        // NOTE: Do not place your application dependencies here; they belong
-        // in the individual module build.gradle.kts files
+        classpath("org.jetbrains.dokka:android-documentation-plugin:1.9.10")
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.9.21")
     }
 }
 
 allprojects {
     repositories {
-        jcenter()
         mavenCentral()
     }
 
-    version = "2.2.1"
+    version = "2.2.2"
     group = "io.github.sphrak"
 }
 
