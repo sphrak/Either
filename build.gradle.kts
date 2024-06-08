@@ -1,23 +1,12 @@
-buildscript {
-    repositories {
-        mavenCentral()
-        google()
-    }
-    dependencies {
-        classpath("org.jetbrains.dokka:android-documentation-plugin:1.9.10")
-        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.9.21")
-    }
+plugins {
+    id("org.jetbrains.kotlin.multiplatform").version("2.0.0") apply false
+    id("org.jetbrains.kotlinx.binary-compatibility-validator") version "0.15.0-Beta.2"
+    id("root.publication")
 }
 
-allprojects {
-    repositories {
-        mavenCentral()
+apiValidation {
+    @OptIn(kotlinx.validation.ExperimentalBCVApi::class)
+    klib {
+        enabled = true
     }
-
-    version = "2.2.2"
-    group = "io.github.sphrak"
-}
-
-tasks.register("clean", Delete::class) {
-    delete(rootProject.buildDir)
 }

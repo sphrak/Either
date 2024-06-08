@@ -2,6 +2,14 @@
 
 ## [Unreleased]
 
+## [2.3.0] -- 2024-06-08
+
+* KMP support
+* Kotlin binary compatibility validator
+* kotlin 2.0.0
+* kotlinx.coroutines 1.8.1
+* gradle 8.8
+
 ## [2.2.1] -- 2022-10-16 
 
 ### Changed

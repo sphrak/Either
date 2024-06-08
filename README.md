@@ -6,7 +6,6 @@ A container type for representing values. The `Either` type represents values wi
 
 The `Either` type is sometimes used to represent a value which is either correct or an error; by convention, the `Either.Left` constructor is used to hold an error value and the `Either.Right` constructor is used to hold a correct value (mnemonic: "right" also means "correct").
 
-* [Documentation](https://sphrak.github.io/Either/)
 * [Download](https://github.com/sphrak/Either#download)
 * [License](https://github.com/sphrak/Either#license)
 
@@ -21,13 +20,13 @@ repositories {
 **build.gradle:**
 
 ```groovy
-implementation "io.github.sphrak:either:2.2.2"
+implementation "io.github.sphrak:either:2.3.0"
 ```
 
 **build.gradle.kts:**
 
 ```kotlin
-implementation("io.github.sphrak:either:2.2.2")
+implementation("io.github.sphrak:either:2.3.0")
 ```
 
 ### License

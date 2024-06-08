@@ -1,0 +1,56 @@
+public abstract class io/github/sphrak/either/Either {
+	public final fun either (Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function1;)Ljava/lang/Object;
+	public final fun isLeft ()Z
+	public final fun isRight ()Z
+	public final fun left (Ljava/lang/Object;)Lio/github/sphrak/either/Either$Left;
+	public final fun right (Ljava/lang/Object;)Lio/github/sphrak/either/Either$Right;
+}
+
+public final class io/github/sphrak/either/Either$Left : io/github/sphrak/either/Either {
+	public fun <init> (Ljava/lang/Object;)V
+	public final fun component1 ()Ljava/lang/Object;
+	public final fun copy (Ljava/lang/Object;)Lio/github/sphrak/either/Either$Left;
+	public static synthetic fun copy$default (Lio/github/sphrak/either/Either$Left;Ljava/lang/Object;ILjava/lang/Object;)Lio/github/sphrak/either/Either$Left;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getA ()Ljava/lang/Object;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class io/github/sphrak/either/Either$Right : io/github/sphrak/either/Either {
+	public fun <init> (Ljava/lang/Object;)V
+	public final fun component1 ()Ljava/lang/Object;
+	public final fun copy (Ljava/lang/Object;)Lio/github/sphrak/either/Either$Right;
+	public static synthetic fun copy$default (Lio/github/sphrak/either/Either$Right;Ljava/lang/Object;ILjava/lang/Object;)Lio/github/sphrak/either/Either$Right;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getB ()Ljava/lang/Object;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class io/github/sphrak/either/EitherKt {
+	public static final fun flatMap (Lio/github/sphrak/either/Either;Lkotlin/jvm/functions/Function1;)Lio/github/sphrak/either/Either;
+	public static final fun flatMapSuspend (Lio/github/sphrak/either/Either;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static final fun map (Lio/github/sphrak/either/Either;Lkotlin/jvm/functions/Function1;)Lio/github/sphrak/either/Either;
+}
+
+public final class io/github/sphrak/either/coroutines/EitherKt {
+	public static final fun flatMap (Lio/github/sphrak/either/Either;Lkotlin/jvm/functions/Function2;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static final fun map (Lio/github/sphrak/either/Either;Lkotlin/jvm/functions/Function2;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class io/github/sphrak/either/extension/EitherKt {
+	public static final fun asLeft (Ljava/lang/Object;)Lio/github/sphrak/either/Either$Left;
+	public static final fun asRight (Ljava/lang/Object;)Lio/github/sphrak/either/Either$Right;
+	public static final fun eitherSuspend (Lio/github/sphrak/either/Either;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function2;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static final fun getErrorOrNull (Lio/github/sphrak/either/Either;)Ljava/lang/Object;
+	public static final fun getGetLeftOrNull (Lio/github/sphrak/either/Either;)Ljava/lang/Object;
+	public static final fun getGetRightOrNull (Lio/github/sphrak/either/Either;)Ljava/lang/Object;
+	public static final fun getSuccessOrNull (Lio/github/sphrak/either/Either;)Ljava/lang/Object;
+	public static final fun mapSuspend (Lio/github/sphrak/either/Either;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static final fun onError (Lio/github/sphrak/either/Either;Lkotlin/jvm/functions/Function1;)Lio/github/sphrak/either/Either;
+	public static final fun onResult (Lio/github/sphrak/either/Either;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function1;)Ljava/lang/Object;
+	public static final fun onResultSuspend (Lio/github/sphrak/either/Either;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function2;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static final fun onSuccess (Lio/github/sphrak/either/Either;Lkotlin/jvm/functions/Function1;)Lio/github/sphrak/either/Either;
+}
+

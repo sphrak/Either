@@ -1,4 +1,3 @@
-import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 
 /*
  * Copyright (c) 2019 Niclas Kron.
@@ -15,118 +14,41 @@ import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 plugins {
-    kotlin("jvm")
-    id("com.github.johnrengelman.shadow") version "5.2.0"
-    `maven-publish`
-    id("org.jetbrains.dokka") version "1.9.10"
+    id("org.jetbrains.kotlin.multiplatform") version "2.0.0"
+    id("module.publication")
 }
 
-val artifactId = "either"
-val build: DefaultTask by tasks
-val shadowJar = tasks["shadowJar"] as ShadowJar
+kotlin {
 
-build.dependsOn(shadowJar)
-
-configurations {
-    ktlint
-}
-
-tasks.withType<Test> {
-    useJUnitPlatform()
-}
-
-java {
-    sourceCompatibility = JavaVersion.VERSION_17
-    targetCompatibility = JavaVersion.VERSION_17
-}
-
-val ktlint: Configuration = configurations.create("ktlint")
-val outputDir = "${project.buildDir}/reports/ktlint/"
-val inputFiles = project.fileTree(mapOf("dir" to "src", "include" to "**/*.kt"))
-
-dependencies {
-    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.9.21")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
-    ktlint("com.pinterest:ktlint:0.40.0")
-    testImplementation("org.junit.jupiter:junit-jupiter:5.5.1")
-    testImplementation("org.assertj:assertj-core:3.13.2")
-}
-
-project.afterEvaluate {
-
-    val sourcesJar = tasks.register<Jar>("sourcesJar") {
-        archiveClassifier.set("sources")
-        from(project.sourceSets["main"].java.srcDirs)
+    applyDefaultHierarchyTemplate()
+    jvm {
+        withJava()
     }
 
-    publishing {
-        publications {
-            create<MavenPublication>("mavenJava") {
-                from(components["java"])
+    linuxX64()
+    linuxArm64()
 
-                artifact(shadowJar)
-                artifact(sourcesJar.get())
+    mingwX64()
 
-                pom {
-                    licenses {
-                        license {
-                            name.set("The Apache License, Version 2.0")
-                            url.set("http://www.apache.org/licenses/LICENSE-2.0.txt")
-                        }
-                    }
-                }
-                groupId = project.group as String
-                artifactId = artifactId
-                version = project.version as String
+    macosX64()
+    macosArm64()
+
+    iosX64()
+    iosArm64()
+
+    sourceSets {
+        val commonMain by getting {
+            dependencies {
+                implementation("org.jetbrains.kotlin:kotlin-stdlib:2.0.0")
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.1")
             }
         }
-    }
-}
 
-
-fun findProperty(s: String) = project.findProperty(s) as String?
-
-tasks {
-
-    val ktlint by creating(JavaExec::class) {
-        group = "verification"
-        description = "Check Kotlin code style."
-        classpath = configurations["ktlint"]
-        main = "com.pinterest.ktlint.Main"
-        args = listOf("src/**/*.kt")
-    }
-
-    "check" {
-        dependsOn(ktlint)
-    }
-
-    create("ktlintFormat", JavaExec::class) {
-        group = "formatting"
-        description = "Fix Kotlin code style deviations."
-        classpath = configurations["ktlint"]
-        main = "com.pinterest.ktlint.Main"
-        args = listOf("-F", "src/**/*.kt")
-    }
-}
-
-tasks.dokkaHtml.configure {
-    outputDirectory.set(File("docs"))
-
-    dokkaSourceSets {
-        named("main") {
-            noAndroidSdkLink.set(false)
-        }
-    }
-}
-
-tasks.dokkaJekyll.configure {
-    outputDirectory.set(File("docs"))
-
-    dokkaSourceSets {
-        named("main") {
-            noAndroidSdkLink.set(false)
+        val commonTest by getting {
+            dependencies {
+                implementation("org.jetbrains.kotlin:kotlin-test:2.0.0")
+            }
         }
     }
 }
