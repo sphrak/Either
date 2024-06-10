@@ -1,0 +1,11 @@
+// Klib ABI Dump
+// Targets: [linuxArm64, linuxX64, macosArm64, macosX64, mingwX64]
+// Rendering settings:
+// - Signature version: 2
+// - Show manifest properties: true
+// - Show declarations: true
+
+// Library unique name: <io.github.sphrak:either-extensions>
+final fun <#A: kotlin/Any?, #B: kotlin/Any?> (kotlinx.coroutines.flow/Flow<io.github.sphrak.either/Either<#A, #B>>).io.github.sphrak.either.coroutines/map(): kotlinx.coroutines.flow/Flow<#B> // io.github.sphrak.either.coroutines/map|map@kotlinx.coroutines.flow.Flow<io.github.sphrak.either.Either<0:0,0:1>>(){0§<kotlin.Any?>;1§<kotlin.Any?>}[0]
+final suspend fun <#A: kotlin/Any?, #B: kotlin/Any?> (io.github.sphrak.either/Either<#A, #B>).io.github.sphrak.either.coroutines/onEach(kotlin.coroutines/SuspendFunction1<#B, kotlin/Unit>): io.github.sphrak.either/Either<#A, #B> // io.github.sphrak.either.coroutines/onEach|onEach@io.github.sphrak.either.Either<0:0,0:1>(kotlin.coroutines.SuspendFunction1<0:1,kotlin.Unit>){0§<kotlin.Any?>;1§<kotlin.Any?>}[0]
+final suspend fun <#A: kotlin/Any?, #B: kotlin/Any?> (io.github.sphrak.either/Either<#A, kotlin.collections/List<#B>>).io.github.sphrak.either.coroutines/filter(kotlin.coroutines/SuspendFunction1<#B, kotlin/Boolean>): io.github.sphrak.either/Either<#A, kotlin.collections/List<#B>> // io.github.sphrak.either.coroutines/filter|filter@io.github.sphrak.either.Either<0:0,kotlin.collections.List<0:1>>(kotlin.coroutines.SuspendFunction1<0:1,kotlin.Boolean>){0§<kotlin.Any?>;1§<kotlin.Any?>}[0]
