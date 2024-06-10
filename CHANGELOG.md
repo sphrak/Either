@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+## [2.4.0] -- 2024-06-10
+
+* new artifact `either-extensions` with `Flow` extensions
+
 ## [2.3.0] -- 2024-06-08
 
 * KMP support
