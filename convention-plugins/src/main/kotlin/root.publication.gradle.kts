@@ -1,4 +1,4 @@
 allprojects {
     group = "io.github.sphrak"
-    version = "2.4.0"
+    version = "2.4.3"
 }

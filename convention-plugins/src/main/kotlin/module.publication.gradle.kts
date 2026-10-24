@@ -7,6 +7,17 @@ plugins {
 }
 
 publishing {
+    repositories {
+        maven {
+            name = "GitHubPackages"
+            url = uri("https://maven.pkg.github.com/sphrak/either")
+            credentials {
+                username = System.getenv("GH_PACKAGE_REGISTRY_USERNAME")
+                password = System.getenv("GH_PACKAGE_REGISTRY_KEY")
+            }
+        }
+    }
+
     // Configure all publications
     publications.withType<MavenPublication> {
 

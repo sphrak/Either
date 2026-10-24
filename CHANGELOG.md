@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+## [2.4.3] -- 2026-10-24
+
+* Nothing new just a re-release
+
 ## [2.4.0] -- 2024-06-10
 
 * new artifact `either-extensions` with `Flow` extensions
