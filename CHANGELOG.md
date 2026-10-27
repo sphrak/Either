@@ -2,6 +2,11 @@
 
 ## [Unreleased]
 
+## [2.5.0] -- 2026-10-27
+
+* `iosSimulatorArm64` target for `either`
+* iOS targets (`iosX64`, `iosArm64`, `iosSimulatorArm64`) for `either-extensions`
+
 ## [2.4.3] -- 2026-10-24
 
 * Nothing new just a re-release
